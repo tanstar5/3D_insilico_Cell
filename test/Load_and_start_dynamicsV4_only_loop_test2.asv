@@ -1,0 +1,13 @@
+no_of_loops = 100000;
+for loop_no = 1:no_of_loops
+    
+    fprintf('\n LOOP NO = %d STARTED \n',loop_no);
+    
+    [obj_list] = vertex_displacement_MC_local_move(obj_list,0*0.2*(obj_list(1).Av_vertex).^.5,type_properties,temperature,gaussian_modulus,surface_modulus,distortion_modulous,quantal_change);
+    [obj_list] = lipid_exchange_MC_local_move(obj_list,quantal_change, type_properties,temperature,gaussian_modulus,surface_modulus,distortion_modulous);
+    
+    [surface_mesh] = generate_mesh_from_objlist(obj_list);
+    [patch_color] = color_code_lipid_density_profile_patch_wise(obj_list);
+    trisurf(surface_mesh,patch_color(:,1)./patch_color(:,3),'FaceAlpha',.2); daspect([1,1,1]) 
+    pause(0.1)
+end
